@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Silence is golden.
 }
 
-define( 'NMM_VERSION', '1.0.4' );
+define( 'NMM_VERSION', '1.0.5' );
 define( 'NMM_FILE', __FILE__ );
 define( 'NMM_PATH', plugin_dir_path( __FILE__ ) );
 define( 'NMM_URL', plugin_dir_url( __FILE__ ) );
@@ -75,24 +75,56 @@ function nalli_megamenu_register_assets() {
 		NMM_VERSION
 	);
 
+	// Main script — depends on elementor-frontend (used when the widget is on the page).
 	wp_register_script(
 		'nalli-megamenu-script',
 		NMM_URL . 'assets/js/header-megamenu.js',
 		[ 'jquery', 'elementor-frontend' ],
 		NMM_VERSION,
-		true // $in_footer = true
+		true
 	);
-	
+
+	// Standalone script for pages WITHOUT the Elementor widget (e.g. wishlist page).
+	// Same file, but depends only on jQuery so it always loads correctly.
+	wp_register_script(
+		'nalli-megamenu-script-standalone',
+		NMM_URL . 'assets/js/header-megamenu.js',
+		[ 'jquery' ],
+		NMM_VERSION,
+		true
+	);
+
 	$wc_ajax_url = class_exists( 'WC_AJAX' ) ? WC_AJAX::get_endpoint( '%%endpoint%%' ) : admin_url( 'admin-ajax.php' );
-	
-	wp_localize_script(
-		'nalli-megamenu-script',
-		'nmm_ajax',
-		[
-			'ajax_url'    => admin_url( 'admin-ajax.php' ),
-			'wc_ajax_url' => $wc_ajax_url,
-		]
-	);
+
+	$localize_data = [
+		'ajax_url'    => admin_url( 'admin-ajax.php' ),
+		'wc_ajax_url' => $wc_ajax_url,
+		'nonce'       => wp_create_nonce( 'nmm_wishlist_nonce' ),
+	];
+
+	wp_localize_script( 'nalli-megamenu-script', 'nmm_ajax', $localize_data );
+	wp_localize_script( 'nalli-megamenu-script-standalone', 'nmm_ajax', $localize_data );
+
+	// Force-enqueue the standalone script on any page that contains the wishlist shortcode.
+	nalli_megamenu_maybe_enqueue_wishlist();
+}
+
+/**
+ * Enqueue the standalone script + style on pages containing the wishlist shortcode.
+ * This ensures the wishlist JS works even when the Elementor megamenu widget
+ * is NOT present on that page (which is the common case for a dedicated wishlist page).
+ */
+function nalli_megamenu_maybe_enqueue_wishlist() {
+	global $post;
+	if ( ! is_a( $post, 'WP_Post' ) ) return;
+
+	$has_shortcode = has_shortcode( $post->post_content, 'nmm_wishlist_page' )
+		|| has_shortcode( $post->post_content, 'mm_wishlist_page' );
+
+	if ( $has_shortcode ) {
+		wp_enqueue_style( 'nalli-megamenu-style' );
+		wp_enqueue_script( 'nalli-megamenu-script-standalone' );
+	}
 }
 
 /**
@@ -239,8 +271,14 @@ function nmm_add_wishlist_button() {
  * Wishlist Page Shortcode
  */
 add_shortcode( 'nmm_wishlist_page', 'nmm_wishlist_page_shortcode' );
+add_shortcode( 'mm_wishlist_page', 'nmm_wishlist_page_shortcode' ); // alias for backward compat
 function nmm_wishlist_page_shortcode() {
     if ( ! class_exists( 'WooCommerce' ) ) return '<p>' . esc_html__( 'WooCommerce is required for the wishlist.', 'nalli-megamenu' ) . '</p>';
+
+    // Ensure the script is enqueued even if shortcode is loaded dynamically.
+    wp_enqueue_style( 'nalli-megamenu-style' );
+    wp_enqueue_script( 'nalli-megamenu-script-standalone' );
+
     return '<div id="nmm-wishlist-container" class="woocommerce"><div class="nmm-search-loading" style="text-align:center; padding:50px;">' . esc_html__( 'Loading wishlist...', 'nalli-megamenu' ) . '</div></div>';
 }
 

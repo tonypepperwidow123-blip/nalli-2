@@ -541,13 +541,22 @@
 
   }; // end NMMHandler
 
-  // Register with Elementor frontend.
+  // Register with Elementor frontend only when elementorFrontend is available.
   $(window).on('elementor/frontend/init', function () {
+    if (typeof elementorFrontend === 'undefined' || !elementorFrontend.hooks) return;
     elementorFrontend.hooks.addAction(
       'frontend/element_ready/nalli_header_megamenu.default',
       NMMHandler
     );
   });
+
+  // If elementorFrontend is already initialized (e.g. standalone / non-Elementor page), skip.
+  if (typeof elementorFrontend !== 'undefined' && elementorFrontend.hooks) {
+    elementorFrontend.hooks.addAction(
+      'frontend/element_ready/nalli_header_megamenu.default',
+      NMMHandler
+    );
+  }
 
   // -------------------------------------------------------------------------
   // 9. Built-in Wishlist Logic (localStorage)
@@ -627,22 +636,27 @@
     });
 
     // -----------------------------------------------------------------------
-    // Render Wishlist Page (if [nmm_wishlist_page] is present)
+    // Render Wishlist Page (if [nmm_wishlist_page] or [mm_wishlist_page] is present)
     // -----------------------------------------------------------------------
     var $wishlistContainer = $('#nmm-wishlist-container');
     if ($wishlistContainer.length) {
       if (wishlist.length === 0) {
         $wishlistContainer.html('<p class="cart-empty woocommerce-info">Your wishlist is currently empty.</p>');
       } else {
-        var ajaxUrl = '/wp-admin/admin-ajax.php';
-        if (typeof wc_add_to_cart_params !== 'undefined') { ajaxUrl = wc_add_to_cart_params.ajax_url; }
-        
+        // Always use the server-localized AJAX URL to avoid hardcoded path issues
+        // on subdirectory or custom-URL WordPress installs.
+        var ajaxUrl = (typeof nmm_ajax !== 'undefined' && nmm_ajax.ajax_url)
+          ? nmm_ajax.ajax_url
+          : '/wp-admin/admin-ajax.php';
+        var nonce = (typeof nmm_ajax !== 'undefined' && nmm_ajax.nonce) ? nmm_ajax.nonce : '';
+
         $.ajax({
           url: ajaxUrl,
           type: 'POST',
           data: {
             action: 'nmm_render_wishlist',
-            product_ids: wishlist
+            product_ids: wishlist,
+            _wpnonce: nonce
           },
           success: function(response) {
             if (response.success && response.data) {
