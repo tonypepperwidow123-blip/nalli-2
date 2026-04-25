@@ -1,0 +1,1412 @@
+/* ==========================================================================
+   Nalli MegaMenu — Frontend Styles
+   Scoped under .elementor-widget-nalli_header_megamenu or .nmm-wrapper
+   Version: 1.0.0
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Variables — all defaults set here, overridden by Elementor controls
+   -------------------------------------------------------------------------- */
+.nmm-wrapper {
+  --nmm-ann-bg: #8B1C2C;
+  --nmm-ann-color: #ffffff;
+  --nmm-ann-speed: 4000ms;
+  --nmm-ann-height: 36px;
+  --nmm-header-bg: #ffffff;
+  --nmm-header-height: 70px;
+  --nmm-logo-width: 100px;
+  --nmm-nav-color: #333333;
+  --nmm-nav-hover: #8B1C2C;
+  --nmm-nav-active: #8B1C2C;
+  --nmm-nav-spacing: 28px;
+  --nmm-mm-bg: #ffffff;
+  --nmm-mm-width: 900px;
+  --nmm-mm-image-height: 160px;
+  --nmm-mm-cols: 5;
+  --nmm-mm-gap: 12px;
+  --nmm-mm-border-radius: 0 0 8px 8px;
+  --nmm-mm-tab-bg: #f9f5f3;
+  --nmm-mm-tab-active-color: #8B1C2C;
+  --nmm-img-radius: 4px;
+  --nmm-drawer-width: 320px;
+  --nmm-drawer-bg: #ffffff;
+  --nmm-drawer-overlay: rgba(0, 0, 0, 0.45);
+  --nmm-drawer-nav-color: #333333;
+  --nmm-drawer-nav-hover: #8B1C2C;
+  --nmm-drawer-separator-color: #eeeeee;
+  --nmm-drawer-close-color: #333333;
+  --nmm-drawer-sub-color: #555555;
+  --nmm-drawer-sub-hover: #8B1C2C;
+  --nmm-hamburger-color: #333333;
+  --nmm-hamburger-bg: transparent;
+  --nmm-hamburger-radius: 4px;
+  --nmm-hamburger-bar-width: 24px;
+  --nmm-hamburger-bar-height: 2px;
+  --nmm-hamburger-gap: 5px;
+  --nmm-icon-color: #333333;
+  --nmm-icon-size: 22px;
+  --nmm-header-z-index: 9999;
+}
+
+/* Reset within wrapper */
+.nmm-wrapper *,
+.nmm-wrapper *::before,
+.nmm-wrapper *::after {
+  box-sizing: border-box;
+}
+
+.nmm-wrapper ul,
+.nmm-wrapper ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nmm-wrapper a {
+  text-decoration: none;
+}
+
+/* Force Full Width Override */
+.nmm-force-fw-yes {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  margin-right: calc(-50vw + 50%) !important;
+  position: relative !important;
+  left: 0 !important;
+  right: 0 !important;
+  transform: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. Announcement / Ticker Bar
+   -------------------------------------------------------------------------- */
+.nmm-ann-bar {
+  background: var(--nmm-ann-bg);
+  overflow: hidden;
+  white-space: nowrap;
+  height: var(--nmm-ann-height);
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: calc(var(--nmm-header-z-index) + 1);
+}
+
+.nmm-ann-ticker {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+}
+
+.nmm-ann-track {
+  display: inline-flex;
+  align-items: center;
+  animation: nmm-ticker-scroll var(--nmm-ann-speed) linear infinite;
+  white-space: nowrap;
+}
+
+.nmm-ann-bar:hover .nmm-ann-track {
+  animation-play-state: paused;
+}
+
+.nmm-ann-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 40px;
+  color: var(--nmm-ann-color);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+}
+
+.nmm-ann-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nmm-ann-item a:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+.nmm-ann-sep {
+  color: var(--nmm-ann-color);
+  opacity: 0.4;
+  padding: 0 8px;
+  font-size: 0.65rem;
+}
+
+@keyframes nmm-ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* --------------------------------------------------------------------------
+   3. Header
+   -------------------------------------------------------------------------- */
+.nmm-header {
+  background: var(--nmm-header-bg);
+  min-height: var(--nmm-header-height);
+  position: relative;
+  z-index: var(--nmm-header-z-index);
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+  width: 100%;
+}
+
+.nmm-header-inner {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  padding: 0 32px;
+  height: var(--nmm-header-height);
+  max-width: 100%;
+}
+
+/* Sticky States */
+.nmm-header.nmm-is-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  animation: nmm-slide-down 0.3s ease forwards;
+}
+
+.nmm-header.nmm-has-shadow {
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.10);
+}
+
+@keyframes nmm-slide-down {
+  from { transform: translateY(-100%); opacity: 0.6; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   4. Logo
+   -------------------------------------------------------------------------- */
+.nmm-logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.nmm-logo img {
+  display: block;
+  width: var(--nmm-logo-width);
+  height: auto;
+  max-width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   5. Desktop Navigation
+   -------------------------------------------------------------------------- */
+.nmm-nav {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+}
+
+.nmm-nav-list {
+  display: flex;
+  align-items: stretch;
+  gap: var(--nmm-nav-spacing);
+  flex-wrap: nowrap;
+}
+
+.nmm-nav-item {
+  position: static;
+  display: flex;
+  align-items: stretch;
+}
+
+.nmm-nav-link {
+  color: var(--nmm-nav-color);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.79rem;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+}
+
+.nmm-nav-link:hover,
+.nmm-nav-link.nmm-active {
+  color: var(--nmm-nav-hover);
+}
+
+.nmm-nav-link.nmm-highlight {
+  color: #8B1C2C;
+  font-weight: 700;
+}
+
+/* Chevron on items with mega menus */
+.nmm-nav-item.nmm-has-mega > .nmm-nav-link::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.2s ease;
+  margin-left: 2px;
+}
+
+.nmm-nav-item.nmm-has-mega.nmm-mega-open > .nmm-nav-link::after {
+  transform: rotate(-135deg) translateY(-2px);
+}
+
+
+
+/* --------------------------------------------------------------------------
+   6. MegaMenu Panel
+   -------------------------------------------------------------------------- */
+/* The mega panel must be anchored to the HEADER, not the nav-item,
+   so it spans full width. We use the header's relative context. */
+.nmm-mega-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: var(--nmm-mm-bg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border-top: 1px solid #f0eeec;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s;
+  visibility: hidden;
+  z-index: var(--nmm-header-z-index);
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.nmm-nav-item.nmm-mega-open > .nmm-mega-panel {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+  visibility: visible;
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0s;
+}
+
+/* ── Menu Item Aligned Dropdown Placement ── */
+.nmm-placement-item .nmm-nav-item {
+  position: relative;
+}
+
+.nmm-placement-item .nmm-mega-panel {
+  left: 0;
+  right: auto;
+  width: var(--nmm-mm-width, 800px);
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  border-top: none;
+}
+
+.nmm-mega-inner {
+  display: flex;
+  min-height: 280px;
+  max-width: var(--nmm-mm-width);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* --------------------------------------------------------------------------
+   7. Left Tab Sidebar
+   -------------------------------------------------------------------------- */
+.nmm-mega-tabs {
+  width: 200px;
+  flex-shrink: 0;
+  background: var(--nmm-mm-tab-bg);
+  padding: 20px 0;
+}
+
+.nmm-tab-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.nmm-tab-item {
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #555;
+  transition: color 0.18s ease, background 0.18s ease;
+  border-left: 3px solid transparent;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.nmm-tab-item:hover {
+  color: var(--nmm-mm-tab-active-color);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.nmm-tab-item.nmm-tab-active {
+  color: var(--nmm-mm-tab-active-color);
+  font-weight: 700;
+  background: #fff;
+  border-left-color: var(--nmm-mm-tab-active-color);
+}
+
+/* --------------------------------------------------------------------------
+   8. Category Image Grid
+   -------------------------------------------------------------------------- */
+.nmm-mega-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--nmm-mm-cols), 1fr);
+  gap: var(--nmm-mm-gap);
+  padding: 24px 20px;
+  align-items: start;
+  align-content: start;
+  overflow-y: auto;
+  max-height: 480px;
+}
+
+.nmm-cat-card {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.nmm-cat-card[style*="display: none"],
+.nmm-cat-card.nmm-hidden {
+  display: none !important;
+}
+
+.nmm-cat-img-wrap {
+  position: relative;
+  width: 100%;
+  min-height: var(--nmm-mm-image-height);
+  overflow: hidden;
+  border-radius: var(--nmm-img-radius);
+  background: #f5f0ec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nmm-cat-img-wrap img {
+  width: 100%;
+  height: var(--nmm-mm-image-height);
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.nmm-cat-card:hover .nmm-cat-img-wrap img {
+  transform: scale(1.04);
+}
+
+.nmm-cat-label {
+  font-size: 0.78rem;
+  color: #333;
+  text-align: center;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+  line-height: 1.4;
+  padding: 0 2px;
+}
+
+.nmm-cat-card:hover .nmm-cat-label {
+  color: #8B1C2C;
+}
+
+.nmm-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #8B1C2C;
+  color: #fff;
+  font-size: 0.62rem;
+  padding: 2px 7px;
+  border-radius: 99px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   9. Utility Icons Bar
+   -------------------------------------------------------------------------- */
+.nmm-utils {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.nmm-icon-btn {
+  color: var(--nmm-icon-color);
+  text-decoration: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.nmm-icon-btn:hover {
+  color: #8B1C2C;
+  opacity: 0.85;
+}
+
+.nmm-icon-btn svg {
+  width: var(--nmm-icon-size);
+  height: var(--nmm-icon-size);
+  display: block;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nmm-cart-count,
+.nmm-wishlist-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #8B1C2C;
+  color: #fff;
+  font-size: 9px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Currency selector */
+.nmm-currency {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: var(--nmm-nav-color);
+  transition: color 0.2s ease;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.nmm-currency:hover {
+  color: #8B1C2C;
+}
+
+.nmm-flag {
+  width: 22px;
+  height: 16px;
+  border-radius: 2px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.nmm-chevron {
+  width: 10px;
+  height: 10px;
+  display: block;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --------------------------------------------------------------------------
+   9b. Search Dropdown
+   -------------------------------------------------------------------------- */
+.nmm-search-wrapper {
+  position: relative;
+}
+
+.nmm-search-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 20px);
+  right: 0;
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  z-index: 1000;
+  min-width: 500px;
+}
+
+.nmm-search-form {
+  width: 100%;
+}
+
+.nmm-search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 2px solid #eaeaea;
+  border-radius: 8px;
+  background: #f9f9f9;
+  transition: border-color 0.3s;
+}
+
+.nmm-search-input-wrap:focus-within {
+  border-color: #8B1C2C;
+  background: #fff;
+}
+
+.nmm-search-icon-inside {
+  width: 20px;
+  height: 20px;
+  stroke: #999;
+  fill: none;
+  stroke-width: 2;
+  margin-left: 16px;
+  flex-shrink: 0;
+}
+
+.nmm-search-field {
+  flex: 1;
+  padding: 16px;
+  border: none !important;
+  background: transparent !important;
+  font-size: 1rem;
+  outline: none;
+  color: #333;
+}
+
+.nmm-search-field:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.nmm-search-close-btn {
+  background: none;
+  border: none;
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nmm-search-close-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: #999;
+  fill: none;
+  stroke-width: 2;
+  transition: stroke 0.2s;
+}
+
+.nmm-search-close-btn:hover svg {
+  stroke: #8B1C2C;
+}
+
+/* AJAX Results Styling */
+.nmm-ajax-search-results {
+  margin-top: 0;
+}
+
+.nmm-ajax-search-results:not(:empty) {
+  margin-top: 20px;
+}
+
+.nmm-search-results-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nmm-search-result-item {
+  margin-bottom: 8px;
+}
+
+.nmm-search-result-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.nmm-search-result-link:hover {
+  background: #f5f5f5;
+}
+
+.nmm-search-result-link img,
+.nmm-search-no-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #eaeaea;
+  flex-shrink: 0;
+}
+
+.nmm-search-result-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nmm-search-result-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.3;
+}
+
+.nmm-search-result-price {
+  font-size: 0.85rem;
+  color: #8B1C2C;
+  font-weight: 700;
+}
+
+.nmm-search-loading,
+.nmm-search-no-results,
+.nmm-search-error {
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.nmm-search-view-all {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  margin-top: 10px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  color: #8B1C2C;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.nmm-search-view-all:hover {
+  background: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+  .nmm-search-wrapper {
+    position: static;
+  }
+  .nmm-search-dropdown {
+    left: 16px;
+    right: 16px;
+    width: auto;
+    max-width: none;
+    min-width: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. Mobile Hamburger
+   — Fully reset from any theme/WP button styles.
+   — Uses align-self:center so it does NOT stretch with the flex parent.
+   -------------------------------------------------------------------------- */
+.nmm-wrapper .nmm-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;           /* CRITICAL: prevents stretching to header height */
+  gap: var(--nmm-hamburger-gap, 5px);
+  background: var(--nmm-hamburger-bg, transparent) !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: auto;
+  border-radius: var(--nmm-hamburger-radius, 4px);
+  transition: background 0.2s ease;
+  line-height: 1;
+}
+
+.nmm-wrapper .nmm-hamburger:hover {
+  background: color-mix(in srgb, var(--nmm-hamburger-color, #333) 10%, transparent) !important;
+}
+
+.nmm-wrapper .nmm-hamburger span {
+  display: block;
+  width: var(--nmm-hamburger-bar-width, 24px);
+  height: var(--nmm-hamburger-bar-height, 2px);
+  background: var(--nmm-hamburger-color) !important;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+/* Hamburger — active (X) state */
+.nmm-drawer-open .nmm-wrapper .nmm-hamburger span:nth-child(1),
+.nmm-drawer-open .nmm-hamburger span:nth-child(1) {
+  transform: translateY(calc(var(--nmm-hamburger-bar-height, 2px) + var(--nmm-hamburger-gap, 5px))) rotate(45deg);
+}
+.nmm-drawer-open .nmm-wrapper .nmm-hamburger span:nth-child(2),
+.nmm-drawer-open .nmm-hamburger span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nmm-drawer-open .nmm-wrapper .nmm-hamburger span:nth-child(3),
+.nmm-drawer-open .nmm-hamburger span:nth-child(3) {
+  transform: translateY(calc(-1 * (var(--nmm-hamburger-bar-height, 2px) + var(--nmm-hamburger-gap, 5px)))) rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   11. Mobile Drawer
+   -------------------------------------------------------------------------- */
+.nmm-drawer {
+  display: none; /* becomes block via media query */
+}
+
+.nmm-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--nmm-drawer-overlay);
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.nmm-drawer-panel {
+  position: fixed;
+  top: 0;
+  left: calc(-1 * var(--nmm-drawer-width));
+  width: var(--nmm-drawer-width);
+  height: 100%;
+  background: var(--nmm-drawer-bg);
+  z-index: 10001;
+  overflow-y: auto;
+  transition: left 0.3s ease;
+  padding: 24px 16px 40px;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Open state (class added to .nmm-wrapper) */
+.nmm-drawer-open .nmm-drawer-overlay {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.nmm-drawer-open .nmm-drawer-panel {
+  left: 0;
+}
+
+.nmm-drawer-close {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-size: 1.6rem;
+  cursor: pointer;
+  margin-bottom: 16px;
+  display: block;
+  color: var(--nmm-drawer-close-color, #333333);
+  line-height: 1;
+  padding: 0;
+  transition: color 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.nmm-drawer-close:hover {
+  color: var(--nmm-drawer-nav-hover, #8B1C2C);
+}
+
+.nmm-drawer-logo {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.nmm-drawer-logo img {
+  width: 80px;
+  height: auto;
+}
+
+/* Drawer Navigation */
+.nmm-drawer-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nmm-drawer-nav > li {
+  border-bottom: 1px solid var(--nmm-drawer-separator-color, #eeeeee);
+}
+
+.nmm-drawer-nav > li > a {
+  display: block;
+  padding: 14px 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--nmm-drawer-nav-color, #333333);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nmm-drawer-nav > li > a:hover {
+  color: var(--nmm-drawer-nav-hover, #8B1C2C);
+}
+
+/* Accordion trigger (items with mega menu) */
+.nmm-drawer-acc-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--nmm-drawer-nav-color, #333333);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  text-align: left;
+}
+
+.nmm-drawer-acc-trigger:hover {
+  color: var(--nmm-drawer-nav-hover, #8B1C2C);
+}
+
+.nmm-drawer-acc-trigger::after {
+  content: none;
+}
+
+/* Accordion body */
+.nmm-drawer-acc-body {
+  display: none;
+  padding: 0;
+}
+
+.nmm-drawer-acc-body.nmm-open {
+  display: block;
+}
+
+/* +/— icon used in accordion triggers */
+.nmm-acc-icon {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  flex-shrink: 0;
+  display: inline-block;
+  min-width: 16px;
+  text-align: center;
+  color: var(--nmm-drawer-nav-color, #333333);
+  transition: color 0.2s ease;
+}
+
+.nmm-drawer-acc-trigger:hover .nmm-acc-icon {
+  color: var(--nmm-drawer-nav-hover, #8B1C2C);
+}
+
+/* Plain (non-mega) nav link in drawer */
+.nmm-drawer-plain-link {
+  display: block;
+  padding: 14px 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--nmm-drawer-nav-color, #333333);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nmm-drawer-plain-link:hover {
+  color: var(--nmm-drawer-nav-hover, #8B1C2C);
+}
+
+/* --------------------------------------------------------------------------
+   Second-level "Shop By Category" sub-accordion
+   -------------------------------------------------------------------------- */
+.nmm-drawer-sub-row {
+  border-top: 1px solid var(--nmm-drawer-separator-color, #eeeeee);
+}
+
+.nmm-drawer-sub-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--nmm-drawer-sub-color, #555555);
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.nmm-drawer-sub-trigger:hover {
+  color: var(--nmm-drawer-sub-hover, #8B1C2C);
+}
+
+.nmm-drawer-sub-body {
+  display: none;
+  padding-bottom: 16px;
+}
+
+.nmm-drawer-sub-body.nmm-open {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.nmm-drawer-cat-card {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.nmm-drawer-cat-img {
+  width: 100%;
+  border-radius: 4px;
+  object-fit: cover;
+  height: 120px;
+  display: block;
+}
+
+.nmm-drawer-cat-img--placeholder {
+  height: 120px;
+  background: #f0ebe5;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nmm-drawer-cat-img--placeholder span {
+  font-size: 0.7rem;
+  color: #999;
+  text-align: center;
+  padding: 4px;
+}
+
+.nmm-drawer-cat-label {
+  font-size: 0.72rem;
+  text-align: center;
+  color: var(--nmm-drawer-sub-color, #555555);
+  line-height: 1.3;
+}
+
+/* Drawer utils (icons at bottom) */
+.nmm-drawer-utils {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--nmm-drawer-separator-color, #eeeeee);
+  margin-top: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   12. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+
+/* Large Desktop (≤ 1200px): shrink mega menu cols */
+@media (max-width: 1200px) {
+  .nmm-wrapper {
+    --nmm-mm-cols: 4;
+  }
+}
+
+/* Medium Desktop (≤ 1080px): shrink mega menu cols further */
+@media (max-width: 1080px) {
+  .nmm-wrapper {
+    --nmm-mm-cols: 3;
+  }
+}
+
+/* Tablet and below (≤ 1024px):
+   Reference layout → [≡] [🔍]   [Logo — centered]   [👤] [♡] [🛒]
+   ------------------------------------------------------------------ */
+@media (max-width: 1024px) {
+
+  /* Hide desktop nav + currency selector */
+  .nmm-nav {
+    display: none;
+  }
+
+  .nmm-utils .nmm-currency {
+    display: none;
+  }
+
+  /* Show drawer container */
+  .nmm-drawer {
+    display: block;
+  }
+
+  /* ── Header inner — mobile flex row ────────────────────────────── */
+  .nmm-header-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    height: var(--nmm-header-height);
+    gap: 0;
+  }
+
+  /* ── LEFT: Hamburger ────────────────────────────────────────────── */
+  .nmm-wrapper .nmm-hamburger {
+    display: flex !important;
+    align-self: center;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 8px;
+    order: -2;
+    z-index: 3;
+  }
+
+  /* ── LEFT: Search icon — absolute next to hamburger ─────────────── */
+  /* Pulled out of .nmm-utils flow via absolute positioning so it
+     sits on the LEFT side next to the hamburger, matching the
+     nalli.com reference layout.                                       */
+  .nmm-utils .nmm-icon-btn.nmm-search {
+    position: absolute;
+    left: calc(12px + var(--nmm-hamburger-bar-width, 24px) + 16px + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+  }
+
+  /* ── CENTER: Logo ──────────────────────────────────────────────── */
+  .nmm-logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    max-width: 40%;
+  }
+
+  /* ── RIGHT: Utils (account, wishlist, cart) ─────────────────────── */
+  /* Search is absolutely positioned, so only account/wishlist/cart
+     remain in the normal flow — they push to the right.               */
+  .nmm-utils {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    order: 1;
+  }
+}
+
+/* ── Mobile (≤ 768px): tighten spacing ────────────────────────────── */
+@media (max-width: 768px) {
+
+  .nmm-ann-bar {
+    font-size: 0.78rem;
+  }
+
+  .nmm-header-inner {
+    padding: 0 10px;
+  }
+
+  .nmm-utils {
+    gap: 8px;
+  }
+
+  .nmm-icon-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Recalculate search position with tighter padding */
+  .nmm-utils .nmm-icon-btn.nmm-search {
+    left: calc(10px + var(--nmm-hamburger-bar-width, 24px) + 16px + 8px);
+  }
+}
+
+/* ── Small mobile (≤ 480px): even tighter ─────────────────────────── */
+@media (max-width: 480px) {
+
+  .nmm-ann-item {
+    padding: 0 24px;
+    font-size: 0.75rem;
+  }
+
+  .nmm-header-inner {
+    padding: 0 8px;
+  }
+
+  .nmm-utils {
+    gap: 6px;
+  }
+
+  .nmm-icon-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Recalculate search position at smallest screens */
+  .nmm-utils .nmm-icon-btn.nmm-search {
+    left: calc(8px + var(--nmm-hamburger-bar-width, 24px) + 16px + 6px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   13. Elementor Editor Scoping
+   --------------------------------------------------------------------------
+   Let the responsive breakpoints work naturally so the editor accurately
+   shows the desktop layout at wide widths and the mobile layout at narrow
+   widths (Elementor responsive preview).
+
+   Only override things that break in the editor:
+     • Mega panels  → hidden (content is managed via repeater controls)
+     • Drawer panel → hidden (fixed overlay doesn't work in editor iframe)
+     • Sticky       → disabled (no fixed positioning in editor)
+   -------------------------------------------------------------------------- */
+
+/* ── Prevent sticky / fixed positioning in editor ──────────────────────── */
+.elementor-editor-active .nmm-header,
+.elementor-editor-preview .nmm-header {
+  position: relative !important;
+}
+
+/* ── Mega panels — stay HIDDEN (content edited via repeater controls) ──── */
+.elementor-editor-active .nmm-mega-panel,
+.elementor-editor-preview .nmm-mega-panel {
+  display: none !important;
+}
+
+/* ── Drawer overlay + panel — hidden (doesn't work inside editor) ─────── */
+.elementor-editor-active .nmm-drawer-overlay,
+.elementor-editor-preview .nmm-drawer-overlay {
+  display: none !important;
+}
+
+.elementor-editor-active .nmm-drawer-panel,
+.elementor-editor-preview .nmm-drawer-panel {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   14. Print Reset
+   -------------------------------------------------------------------------- */
+@media print {
+  .nmm-ann-bar,
+  .nmm-hamburger,
+  .nmm-drawer,
+  .nmm-utils {
+    display: none !important;
+  }
+
+  .nmm-mega-panel {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   15. Responsive Fixes for Search & Full Width
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  /* Move the search wrapper to the left, next to the hamburger */
+  .nmm-utils .nmm-search-wrapper {
+    position: absolute !important;
+    left: calc(12px + var(--nmm-hamburger-bar-width, 24px) + 16px + 10px) !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 3 !important;
+  }
+  
+  /* Reset the icon itself since the wrapper is now positioned */
+  .nmm-utils .nmm-icon-btn.nmm-search {
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  /* Make dropdown responsive and full width relative to the screen */
+  .nmm-search-dropdown {
+    position: absolute !important;
+    top: 40px !important;
+    /* Reverse the wrapper's left offset to start 16px from screen edge */
+    left: calc(-1 * (12px + var(--nmm-hamburger-bar-width, 24px) + 16px + 10px) + 16px) !important;
+    width: calc(100vw - 32px) !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    right: auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Tighter spacing for small mobile */
+  .nmm-utils .nmm-search-wrapper {
+    left: calc(8px + var(--nmm-hamburger-bar-width, 24px) + 16px + 6px) !important;
+  }
+  .nmm-search-dropdown {
+    left: calc(-1 * (8px + var(--nmm-hamburger-bar-width, 24px) + 16px + 6px) + 12px) !important;
+    width: calc(100vw - 24px) !important;
+  }
+}
+
+/* Ensure mobile header padding doesn't restrict the search dropdown overflow */
+.nmm-header-inner {
+  position: relative;
+}
+
+/* Prevent horizontal scroll from force full width on mobile */
+body {
+  overflow-x: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Wishlist Product Page Button
+   -------------------------------------------------------------------------- */
+.nmm-wishlist-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* Ensure it aligns perfectly with the standard WooCommerce Add to Cart button */
+.woocommerce div.product form.cart .button {
+  vertical-align: middle;
+}
+
+.nmm-wishlist-btn:hover {
+  background-color: #f7f7f7;
+  border-color: #bbb;
+}
+
+.nmm-wishlist-btn.in-wishlist {
+  color: #e02b27;
+  border-color: #e02b27;
+  background-color: #fff0f0;
+}
+
+.nmm-wishlist-btn svg {
+  transition: all 0.2s ease;
+}
+
+.nmm-wishlist-btn.in-wishlist svg {
+  fill: #e02b27;
+  stroke: #e02b27;
+}
+
+/* --------------------------------------------------------------------------
+   Wishlist Page Layout & Remove Button
+   -------------------------------------------------------------------------- */
+#nmm-wishlist-container.woocommerce {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.nmm-wishlist-layout ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 30px !important;
+  margin: 0 !important;
+}
+
+.nmm-wishlist-layout ul.products::before,
+.nmm-wishlist-layout ul.products::after {
+  display: none !important;
+}
+
+.nmm-wishlist-layout ul.products li.product {
+  position: relative !important;
+  width: 100% !important;
+  margin: 0 !important;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.nmm-wishlist-layout ul.products li.product:hover {
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+}
+
+.nmm-wishlist-layout ul.products li.product > a img {
+  border-radius: 12px 12px 0 0;
+  margin-bottom: 15px;
+}
+
+/* Modern Remove Button */
+.nmm-wishlist-remove {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  z-index: 10 !important;
+  background: #fff !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 36px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important;
+  cursor: pointer !important;
+  color: #888 !important;
+  padding: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.nmm-wishlist-remove:hover {
+  color: #e02b27 !important;
+  background: #fff !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 4px 15px rgba(224, 43, 39, 0.2) !important;
+}
+
+.nmm-wishlist-remove svg {
+  display: block;
+}
