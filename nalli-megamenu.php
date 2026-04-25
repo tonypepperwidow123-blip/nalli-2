@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Silence is golden.
 }
 
-define( 'NMM_VERSION', '1.0.5' );
+define( 'NMM_VERSION', '1.0.6' );
 define( 'NMM_FILE', __FILE__ );
 define( 'NMM_PATH', plugin_dir_path( __FILE__ ) );
 define( 'NMM_URL', plugin_dir_url( __FILE__ ) );

@@ -1026,7 +1026,7 @@ class Header_MegaMenu extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%' ],
 				'range'      => [ 'px' => [ 'min' => 300, 'max' => 3000 ] ],
-				'default'    => [ 'size' => 900, 'unit' => 'px' ],
+				'default'    => [ 'size' => 1050, 'unit' => 'px' ],
 				'selectors'  => [ '{{WRAPPER}} .nmm-wrapper' => '--nmm-mm-width: {{SIZE}}{{UNIT}};' ],
 			]
 		);
@@ -1088,7 +1088,7 @@ class Header_MegaMenu extends \Elementor\Widget_Base {
 			[
 				'label'     => esc_html__( 'Grid Columns', 'nalli-megamenu' ),
 				'type'      => \Elementor\Controls_Manager::SELECT,
-				'default'   => '5',
+				'default'   => '4',
 				'options'   => [
 					'2' => '2',
 					'3' => '3',
@@ -1108,7 +1108,7 @@ class Header_MegaMenu extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [ 'px' => [ 'min' => 60, 'max' => 400 ] ],
-				'default'    => [ 'size' => 160, 'unit' => 'px' ],
+				'default'    => [ 'size' => 240, 'unit' => 'px' ],
 				'selectors'  => [ '{{WRAPPER}} .nmm-wrapper' => '--nmm-mm-image-height: {{SIZE}}{{UNIT}};' ],
 			]
 		);
