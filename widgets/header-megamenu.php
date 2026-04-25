@@ -815,7 +815,10 @@ class Header_MegaMenu extends \Elementor\Widget_Base {
 			[
 				'label'     => esc_html__( 'Wishlist Icon Color', 'nalli-megamenu' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [ '{{WRAPPER}} .nmm-wishlist' => 'color: {{VALUE}};' ],
+				'selectors' => [ 
+					'{{WRAPPER}} .nmm-wishlist' => 'color: {{VALUE}} !important;',
+					'{{WRAPPER}} .nmm-wishlist svg' => 'stroke: {{VALUE}} !important;'
+				],
 				'description' => esc_html__( 'Leave empty to use the Global Icon Color.', 'nalli-megamenu' ),
 			]
 		);
