@@ -802,11 +802,21 @@ class Header_MegaMenu extends \Elementor\Widget_Base {
 		$this->add_control(
 			'icon_color',
 			[
-				'label'     => esc_html__( 'Icon Color', 'nalli-megamenu' ),
+				'label'     => esc_html__( 'Global Icon Color', 'nalli-megamenu' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'default'   => '#333333',
 				'selectors' => [ '{{WRAPPER}} .nmm-wrapper' => '--nmm-icon-color: {{VALUE}};' ],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'wishlist_icon_color',
+			[
+				'label'     => esc_html__( 'Wishlist Icon Color', 'nalli-megamenu' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [ '{{WRAPPER}} .nmm-wishlist' => 'color: {{VALUE}};' ],
+				'description' => esc_html__( 'Leave empty to use the Global Icon Color.', 'nalli-megamenu' ),
 			]
 		);
 
