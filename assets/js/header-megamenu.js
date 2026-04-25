@@ -581,6 +581,7 @@
       if (wishlist.map(String).indexOf(String(pid)) !== -1) {
         $(this).addClass('in-wishlist');
         $(this).attr('title', 'In Wishlist');
+        $(this).find('.nmm-wishlist-btn-text').text('In Wishlist');
       }
     });
 
@@ -596,11 +597,13 @@
         wishlist.push(pid);
         $btn.addClass('in-wishlist');
         $btn.attr('title', 'In Wishlist');
+        $btn.find('.nmm-wishlist-btn-text').text('In Wishlist');
       } else {
         // Remove from wishlist
         wishlist.splice(index, 1);
         $btn.removeClass('in-wishlist');
         $btn.attr('title', 'Add to Wishlist');
+        $btn.find('.nmm-wishlist-btn-text').text('Add to Wishlist');
       }
 
       // Save and update UI

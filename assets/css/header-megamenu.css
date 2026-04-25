@@ -1294,20 +1294,23 @@ body {
    Wishlist Product Page Button
    -------------------------------------------------------------------------- */
 .nmm-wishlist-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
+  background-color: #fff;
   color: #333;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 44px;
-  height: 44px;
-  padding: 0;
+  border-radius: 4px; /* Optional: adjust if Buy Now has square corners */
+  width: 100%;
+  height: 48px;
+  padding: 0 20px;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-left: 10px;
-  vertical-align: middle;
+  margin-top: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
 }
 
 /* Ensure it aligns perfectly with the standard WooCommerce Add to Cart button */
@@ -1316,23 +1319,25 @@ body {
 }
 
 .nmm-wishlist-btn:hover {
-  background-color: #f7f7f7;
-  border-color: #bbb;
+  background-color: #fcfcfc;
+  border-color: #8B1C2C;
+  color: #8B1C2C;
 }
 
 .nmm-wishlist-btn.in-wishlist {
-  color: #e02b27;
-  border-color: #e02b27;
-  background-color: #fff0f0;
+  color: #fff;
+  border-color: #8B1C2C;
+  background-color: #8B1C2C;
 }
 
 .nmm-wishlist-btn svg {
+  margin-right: 8px;
   transition: all 0.2s ease;
 }
 
 .nmm-wishlist-btn.in-wishlist svg {
-  fill: #e02b27;
-  stroke: #e02b27;
+  fill: #fff;
+  stroke: #fff;
 }
 
 /* --------------------------------------------------------------------------
