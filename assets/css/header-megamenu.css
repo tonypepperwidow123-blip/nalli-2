@@ -1291,6 +1291,75 @@ body {
 }
 
 /* --------------------------------------------------------------------------
+   Shop Loop Wishlist Button
+   -------------------------------------------------------------------------- */
+.woocommerce ul.products li.product {
+  position: relative;
+}
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn,
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn:hover,
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn:focus,
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn.active,
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn.in-wishlist {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  width: 36px !important;
+  height: 36px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  display: grid !important;
+  place-items: center !important;
+  cursor: pointer !important;
+  z-index: 99 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn svg {
+  grid-area: 1 / 1 !important;
+  width: 20px !important;
+  height: 20px !important;
+  transition: opacity 0.25s ease, transform 0.25s ease, fill 0.25s ease, stroke 0.25s ease !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn .vesara-heart-outline {
+  opacity: 1;
+  transform: scale(1);
+  stroke: #ffffff;
+  stroke-width: 2px;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.4));
+  fill: none;
+}
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn .vesara-heart-solid {
+  opacity: 0;
+  transform: scale(0.8);
+  fill: #C9A961;
+  stroke: none;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Active State */
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn.active .vesara-heart-outline,
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn.in-wishlist .vesara-heart-outline {
+  opacity: 0;
+  transform: scale(0.8);
+}
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn.active .vesara-heart-solid,
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn.in-wishlist .vesara-heart-solid {
+  opacity: 1;
+  transform: scale(1);
+  fill: #C9A961;
+}
+
+/* Hover State */
+.woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn:not(.active):not(.in-wishlist):hover .vesara-heart-outline {
+  stroke: #C9A961;
+}
+
+/* --------------------------------------------------------------------------
    Wishlist Product Page Button
    -------------------------------------------------------------------------- */
 .nmm-wishlist-btn {

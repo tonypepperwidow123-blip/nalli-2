@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Silence is golden.
 }
 
-define( 'NMM_VERSION', '1.0.8' );
+define( 'NMM_VERSION', '1.0.9' );
 define( 'NMM_FILE', __FILE__ );
 define( 'NMM_PATH', plugin_dir_path( __FILE__ ) );
 define( 'NMM_URL', plugin_dir_url( __FILE__ ) );
@@ -250,6 +250,115 @@ function nalli_megamenu_cart_count_fragments( $fragments ) {
 		$fragments['span.nmm-cart-count'] = '<span class="nmm-cart-count" aria-label="' . esc_attr__( 'Cart items', 'nalli-megamenu' ) . '">' . WC()->cart->get_cart_contents_count() . '</span>';
 	}
 	return $fragments;
+}
+
+/**
+ * Inline CSS for Shop Loop Wishlist Button (Bypasses Cache & Theme Defaults)
+ */
+add_action( 'wp_head', 'nmm_shop_loop_wishlist_inline_css', 100 );
+function nmm_shop_loop_wishlist_inline_css() {
+    if ( ! class_exists( 'WooCommerce' ) ) return;
+    ?>
+    <style>
+    /* Ensure the thumbnail wrapper is relative */
+    .woocommerce ul.products li.product .astra-shop-thumbnail-wrap,
+    .woocommerce ul.products li.product .ast-woo-product-image-wrap,
+    .woocommerce ul.products li.product .astra-shop-summary-wrap,
+    .woocommerce ul.products li.product {
+        position: relative !important;
+    }
+
+    .nmm-shop-loop-wishlist-btn {
+        position: absolute !important;
+        top: 15px !important;
+        right: 15px !important;
+        width: 32px !important;
+        height: 32px !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+        display: grid !important;
+        place-items: center !important;
+        cursor: pointer !important;
+        z-index: 999 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .nmm-shop-loop-wishlist-btn svg {
+        grid-area: 1 / 1 !important;
+        width: 22px !important;
+        height: 22px !important;
+        transition: opacity 0.25s ease, transform 0.25s ease, fill 0.25s ease, stroke 0.25s ease !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    .nmm-shop-loop-wishlist-btn .vesara-heart-outline {
+        opacity: 1 !important;
+        transform: scale(1) !important;
+        stroke: #ffffff !important;
+        stroke-width: 2px !important;
+        filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.4)) !important;
+        fill: none !important;
+    }
+    
+    .nmm-shop-loop-wishlist-btn .vesara-heart-solid {
+        opacity: 0 !important;
+        transform: scale(0.8) !important;
+        fill: #C9A961 !important;
+        stroke: none !important;
+        filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2)) !important;
+    }
+    
+    /* Active State */
+    .nmm-shop-loop-wishlist-btn.active .vesara-heart-outline,
+    .nmm-shop-loop-wishlist-btn.in-wishlist .vesara-heart-outline {
+        opacity: 0 !important;
+        transform: scale(0.8) !important;
+    }
+    
+    .nmm-shop-loop-wishlist-btn.active .vesara-heart-solid,
+    .nmm-shop-loop-wishlist-btn.in-wishlist .vesara-heart-solid {
+        opacity: 1 !important;
+        transform: scale(1) !important;
+        fill: #C9A961 !important;
+    }
+    
+    /* Hover State */
+    .nmm-shop-loop-wishlist-btn:not(.active):not(.in-wishlist):hover .vesara-heart-outline {
+        stroke: #C9A961 !important;
+    }
+    </style>
+    <?php
+}
+
+/**
+ * Shop Loop Wishlist Button
+ */
+add_action( 'woocommerce_before_shop_loop_item', 'nmm_shop_loop_wishlist_icon', 9 );
+function nmm_shop_loop_wishlist_icon() {
+    // Do not show on wishlist ajax render to avoid conflicts with remove button
+    if ( wp_doing_ajax() && isset( $_REQUEST['action'] ) && $_REQUEST['action'] === 'nmm_render_wishlist' ) {
+        return;
+    }
+
+    global $product;
+    if ( ! $product ) return;
+
+    $product_id = $product->get_id();
+    echo '<button class="nmm-shop-loop-wishlist-btn nmm-wishlist-btn"
+            aria-label="' . esc_attr__( 'Add to Wishlist', 'nalli-megamenu' ) . '"
+            data-product-id="' . esc_attr( $product_id ) . '">
+        <svg class="vesara-heart-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <svg class="vesara-heart-solid" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+    </button>';
 }
 
 /**

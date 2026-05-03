@@ -588,6 +588,7 @@
     // Handle Wishlist Button Click
     $(document).on('click', '.nmm-wishlist-btn', function(e) {
       e.preventDefault();
+      e.stopPropagation();
       var $btn = $(this);
       var pid = String($btn.data('product-id'));
       var index = wishlist.map(String).indexOf(pid);
