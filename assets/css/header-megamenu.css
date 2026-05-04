@@ -1317,6 +1317,15 @@ body {
   padding: 0 !important;
   margin: 0 !important;
 }
+
+/* Adjust Wishlist Button in Related Products to be a little left */
+.woocommerce .related ul.products li.product .nmm-shop-loop-wishlist-btn,
+.woocommerce .related ul.products li.product .nmm-shop-loop-wishlist-btn:hover,
+.woocommerce .related ul.products li.product .nmm-shop-loop-wishlist-btn:focus,
+.woocommerce .related ul.products li.product .nmm-shop-loop-wishlist-btn.active,
+.woocommerce .related ul.products li.product .nmm-shop-loop-wishlist-btn.in-wishlist {
+  right: 25px !important;
+}
 .woocommerce ul.products li.product .nmm-shop-loop-wishlist-btn svg {
   grid-area: 1 / 1 !important;
   width: 20px !important;
